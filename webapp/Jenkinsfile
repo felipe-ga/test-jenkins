@@ -6,18 +6,22 @@ pipeline {
   }
 
   environment {
-    ARTIFACT_ID = "elbuo8/webapp:${env.BUILD_NUMBER}"
+    ARTIFACT_ID = "galindoaguilarf/webapp:${env.BUILD_NUMBER}"
   }
 
   stages {
     stage('Build') {
       steps {
-        sh "Runing building"
+        script {
+          dir("webapp") {
+            dockerImage = docker.build "${env.ARTIFACT_ID}"
+          }
+        }
       }
     }
     stage('Run tests') {
       steps {
-        sh "runnig testing"
+        sh "docker run ${dockerImage.id} npm test"
       }
     }
   }
