@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    ARTIFACT_ID = "galindoaguilarf/webapp:${env.BUILD_NUMBER}"
+    ARTIFACT_ID = "elbuo8/webapp:${env.BUILD_NUMBER}"
   }
 
   stages {
@@ -24,7 +24,18 @@ pipeline {
         sh "docker run ${dockerImage.id} npm test"
       }
     }
-    
+    stage('Publish') {
+      when {
+        branch 'master'
+      }
+      steps {
+        script {
+          docker.withRegistry("https://registry.hub.docker.com", "DockerHubCredentials") {
+            dockerImage.push()
+          }
+        }
+      }
+    }
   }
 }
 
