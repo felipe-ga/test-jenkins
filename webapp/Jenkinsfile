@@ -12,16 +12,12 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        script {
-          dir("webapp") {
-            dockerImage = docker.build "${env.ARTIFACT_ID}"
-          }
-        }
+        sh "Runing building"
       }
     }
     stage('Run tests') {
       steps {
-        sh "docker run ${dockerImage.id} npm test"
+        sh "runnig testing"
       }
     }
   }
