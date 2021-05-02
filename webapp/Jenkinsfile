@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    ARTIFACT_ID = "elbuo8/webapp:${env.BUILD_NUMBER}"
+    ARTIFACT_ID = "galindoaguilarf/webapp:${env.BUILD_NUMBER}"
   }
 
   stages {
@@ -30,7 +30,7 @@ pipeline {
       }
       steps {
         script {
-          docker.withRegistry("https://registry.hub.docker.com", "DockerHubCredentials") {
+          docker.withRegistry("", "DockerHubCredentials") {
             dockerImage.push()
           }
         }
